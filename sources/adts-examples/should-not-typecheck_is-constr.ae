@@ -1,0 +1,25 @@
+(*
+type z = Z1 | Z2
+
+logic a : z
+logic f : int -> z
+
+goal g:
+Z1 = a and f(1) = Z2
+
+goal g:
+Z1 ? Z2
+*)
+
+type t = A of {a : int} | B of { b : real} | C of { c : t }
+
+type s = D of {d : int} | E of { e : real}
+
+type u = F of {f : int}
+
+logic g : t -> t
+
+goal g:
+forall x : t.
+  x ? g ->
+  false
