@@ -34,6 +34,7 @@ module SE = E.Set
 module ME = E.Map
 module Ex = Explanation
 
+let steps = ref 0L
 
 module Make (Th : Theory.S) : Sat_solver_sig.S = struct
   module Inst = Instances.Make(Th)

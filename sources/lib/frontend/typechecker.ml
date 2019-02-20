@@ -1906,6 +1906,10 @@ let axioms_of_rules loc name lf acc env =
 let type_hypothesis acc env_f loc sort f =
   let f = type_form env_f f in
   let f = monomorphize_form f in
+<<<<<<< HEAD
+=======
+  let f = Triggers.make ~all_triggers:true keep_triggers false f in
+>>>>>>> 1ebc0d9... tmp
   let td =
     {c = TAxiom(loc, fresh_hypothesis_name sort,Util.Default, f);
      annot = new_id () } in
@@ -1915,6 +1919,10 @@ let type_hypothesis acc env_f loc sort f =
 let type_goal acc env_g loc sort n goal =
   let goal = type_form env_g goal in
   let goal = monomorphize_form goal in
+<<<<<<< HEAD
+=======
+  let goal = Triggers.make ~all_triggers:true keep_triggers true goal in
+>>>>>>> 1ebc0d9... tmp
   let td = {c = TGoal(loc, sort, n, goal); annot = new_id () } in
   (td, env_g)::acc
 
