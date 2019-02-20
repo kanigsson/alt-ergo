@@ -835,23 +835,23 @@ let rec make_rec all_triggers keep_triggers pol gopt vterm vtype f =
 	if keep_triggers then check_triggers qf.qf_triggers (vterm', vtype')
 	else if Options.no_user_triggers () || qf.qf_triggers == [] then
 	  begin
-	    (make_triggers false vterm' vtype' (STRS.elements trs1))@
-	      (make_triggers false vterm' vtype' (STRS.elements trs2))
+	    (make_triggers all_triggers false vterm' vtype' (STRS.elements trs1))@
+	      (make_triggers all_triggers false vterm' vtype' (STRS.elements trs2))
 	  end
 	else
 	  begin
 	    let lf = filter_good_triggers (vterm', vtype') qf.qf_triggers in
 	    if lf != [] then lf
 	    else
-	      (make_triggers false vterm' vtype' (STRS.elements trs1))@
-		(make_triggers false vterm' vtype' (STRS.elements trs2))
+	      (make_triggers all_triggers false vterm' vtype' (STRS.elements trs1))@
+		(make_triggers all_triggers false vterm' vtype' (STRS.elements trs2))
 	  end
       in
       let trs12 =
         if trs12 != [] then trs12
         else (* allow vars to escape their scope *)
-	  (make_triggers false vterm' vtype' (STRS.elements f_trs1))@
-	  (make_triggers false vterm' vtype' (STRS.elements f_trs2))
+	  (make_triggers all_triggers false vterm' vtype' (STRS.elements f_trs1))@
+	  (make_triggers all_triggers false vterm' vtype' (STRS.elements f_trs2))
       in
       let trs = STRS.union trs1 trs2 in
       let f_trs = STRS.union trs (STRS.union f_trs1 f_trs2) in
@@ -882,15 +882,15 @@ let rec make_rec all_triggers keep_triggers pol gopt vterm vtype f =
       let trs' =
 	if keep_triggers then check_triggers qf.qf_triggers (vterm', vtype')
 	else if Options.no_user_triggers () || qf.qf_triggers == [] then
-	  make_triggers gopt vterm' vtype' (STRS.elements trs)
+	  make_triggers all_triggers gopt vterm' vtype' (STRS.elements trs)
 	else
 	  let lf = filter_good_triggers (vterm',vtype') qf.qf_triggers in
 	  if lf != [] then lf
-	  else make_triggers gopt vterm' vtype' (STRS.elements trs)
+	  else make_triggers all_triggers gopt vterm' vtype' (STRS.elements trs)
       in
       let trs' = (* allow vars to escape their scope *)
         if trs' != [] then trs'
-        else make_triggers gopt vterm' vtype' (STRS.elements f_trs)
+        else make_triggers all_triggers gopt vterm' vtype' (STRS.elements f_trs)
       in
       let f_trs = STRS.union trs f_trs in
       let trs =

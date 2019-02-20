@@ -84,6 +84,7 @@ CMO = lib/util/config.cmo \
       lib/util/zarithNumbers.cmo \
       lib/util/numbers.cmo \
       lib/util/options.cmo \
+      lib/util/steps.cmo \
       lib/util/vec.cmo \
       lib/util/iheap.cmo \
       lib/util/timers.cmo \
