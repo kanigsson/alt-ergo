@@ -367,6 +367,7 @@ module Make (X : Arg) : S with type theory = X.t = struct
         in
         [sb]
       | _ ->
+        Steps.incr Steps.Matching;
         try
           let s_ty = Ty.matching s_ty ty_pat (T.view t).T.ty in
           let gsb = { sg with sty = s_ty } in

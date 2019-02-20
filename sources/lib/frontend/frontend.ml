@@ -64,6 +64,10 @@ module Make(SAT : Sat_solver_sig.S) : S with type sat_env = SAT.t = struct
   | Timeout of Commands.sat_tdecl option
   | Preprocess
 
+  let get_steps () =
+    if Int64.compare (SAT.get_steps ()) (Steps.stop ()) > 0
+    then SAT.get_steps () else Steps.stop ()
+
   let check_produced_proof dep =
     if verbose () then
       fprintf fmt "checking the proof:\n-------------------\n%a@."
@@ -177,7 +181,7 @@ module Make(SAT : Sat_solver_sig.S) : S with type sat_env = SAT.t = struct
           in
           if debug_proof () then check_produced_proof dep;
           if save_used_context () then do_save_used_context env dep;
-	  print_status (Unsat (d, dep)) (SAT.get_steps ());
+	  print_status (Unsat (d, dep)) (get_steps ());
 	  env, false, dep
 
       | ThAssume th_elt ->
@@ -188,20 +192,20 @@ module Make(SAT : Sat_solver_sig.S) : S with type sat_env = SAT.t = struct
 
     with
       | SAT.Sat t ->
-        print_status (Sat (d,t)) (SAT.get_steps ());
+        print_status (Sat (d,t)) (get_steps ());
         if model () then SAT.print_model ~header:true std_formatter t;
         env , consistent, dep
       | SAT.Unsat dep' ->
         let dep = Explanation.union dep dep' in
         if debug_proof () then check_produced_proof dep;
-        print_status (Inconsistent d) (SAT.get_steps ());
+        print_status (Inconsistent d) (get_steps ());
         env , false, dep
       | SAT.I_dont_know t ->
-        print_status (Unknown (d, t)) (SAT.get_steps ());
+        print_status (Unknown (d, t)) (get_steps ());
         if model () then SAT.print_model ~header:true std_formatter t;
         env , consistent, dep
       | Util.Timeout as e ->
-        print_status (Timeout (Some d)) (SAT.get_steps ());
+        print_status (Timeout (Some d)) (get_steps ());
         raise e
 
   let goal_name d =
