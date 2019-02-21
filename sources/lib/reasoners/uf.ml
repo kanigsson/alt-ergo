@@ -509,7 +509,6 @@ module Env = struct
     let env = List.fold_left init_leaf env (X.leaves v) in
     init_leaf env v
 
-<<<<<<< HEAD
   let init_new_ac_leaves env mkr =
     List.fold_left
       (fun env x ->

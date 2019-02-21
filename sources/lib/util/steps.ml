@@ -11,11 +11,6 @@ let mult_uf = ref 0
 let mult_b = ref 0
 let mult_a = ref 0
 
-let print message =
-      printf
-	"%s: %Ld@."
-	message !steps
-
 let incr k =
   (match k with
   | Uf -> mult_uf := !mult_uf + 1;
