@@ -14,7 +14,7 @@ jobs:
           - ubuntu-latest
           - windows-latest
         ocaml-version:
-          - 4.11.0
+          - 4.12.0
 
     runs-on: ${{ matrix.os }}
 
@@ -22,8 +22,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Use OCaml ${{ matrix.ocaml-version }}
+      - name: Use Setup OCaml v2 ${{ matrix.ocaml-version }}
         uses: avsm/setup-ocaml@v2
+        if: runner.os != 'Windows'
+        with:
+          ocaml-version: ${{ matrix.ocaml-version }}
+
+      - name: Use Setup OCaml v1 ${{ matrix.ocaml-version }}
+        uses: avsm/setup-ocaml@v1
+        if: runner.os == 'Windows'
         with:
           ocaml-version: ${{ matrix.ocaml-version }}
 
