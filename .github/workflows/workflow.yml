@@ -32,15 +32,15 @@ jobs:
 
       - run: opam install camlzip cmdliner dune dune-configurator menhir num ocamlgraph ocplib-simplex psmt2-frontend re seq yojson zarith
 
-      - run: opam exec -- ./configure alt-ergo-lib
+      - run: opam exec -- ocaml unix.cma configure.ml alt-ergo-lib
       - run: opam exec -- make alt-ergo-lib
       - run: opam exec -- make install-lib
 
-      - run: opam exec -- ./configure alt-ergo-parsers
+      - run: opam exec -- ocaml unix.cma configure.ml alt-ergo-parsers
       - run: opam exec -- make alt-ergo-parsers
       - run: opam exec -- make install-parsers
 
-      - run: opam exec -- ./configure alt-ergo --prefix=localinstall
+      - run: opam exec -- ocaml unix.cma configure.ml alt-ergo --prefix=localinstall
       - run: opam exec -- make alt-ergo
       - run: opam exec -- make install-bin
 
