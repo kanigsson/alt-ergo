@@ -30,19 +30,19 @@ jobs:
       - run: opam install camlzip cmdliner dune dune-configurator menhir num ocamlgraph ocplib-simplex psmt2-frontend re seq yojson zarith
 
       - run: opam exec -- ./configure alt-ergo-lib
-      - run: opam exec -- make alt-ergo-lib install-lib
+      - run: opam exec -- make alt-ergo-lib
       - run: opam exec -- make install-lib
 
       - run: opam exec -- ./configure alt-ergo-parsers
       - run: opam exec -- make alt-ergo-parsers
       - run: opam exec -- make install-parsers
 
-      - run: opam exec -- ./configure alt-ergo
+      - run: opam exec -- ./configure alt-ergo --prefix=localinstall
       - run: opam exec -- make alt-ergo
       - run: opam exec -- make install-bin
 
       - name: Upload the build artifact
         uses: actions/upload-artifact@v2
         with:
-          name: alt-ergo.exe
-          path: _build/default/alt-ergo.exe
+          name: alt-ergo
+          path: localinstall
