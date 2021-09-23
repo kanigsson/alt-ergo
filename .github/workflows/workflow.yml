@@ -1,0 +1,48 @@
+name: Main workflow
+
+on:
+  - pull_request
+  - push
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+        ocaml-version:
+          - 4.11.0
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use OCaml ${{ matrix.ocaml-version }}
+        uses: avsm/setup-ocaml@v1
+        with:
+          ocaml-version: ${{ matrix.ocaml-version }}
+
+      - run: opam install camlzip menhir num ocamlgraph ocplib-simplex psmt2-frontend re seq yojson zarith
+
+      - run: opam exec -- ./configure alt-ergo-lib
+      - run: opam exec -- make alt-ergo-lib install-lib
+      - run: opam exec -- make install-lib
+
+      - run: opam exec -- ./configure alt-ergo-parsers
+      - run: opam exec -- make alt-ergo-parsers
+      - run: opam exec -- make install-parsers
+
+      - run: opam exec -- ./configure alt-ergo
+      - run: opam exec -- make alt-ergo
+      - run: opam exec -- make install-bin
+
+      - name: Upload the build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: alt-ergo.exe
+          path: _build/default/alt-ergo.exe
