@@ -27,7 +27,7 @@ jobs:
         with:
           ocaml-version: ${{ matrix.ocaml-version }}
 
-      - run: opam install camlzip dune menhir num ocamlgraph ocplib-simplex psmt2-frontend re seq yojson zarith
+      - run: opam install camlzip dune dune-configurator menhir num ocamlgraph ocplib-simplex psmt2-frontend re seq yojson zarith
 
       - run: opam exec -- ./configure alt-ergo-lib
       - run: opam exec -- make alt-ergo-lib install-lib
