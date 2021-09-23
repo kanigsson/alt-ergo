@@ -54,5 +54,5 @@ jobs:
       - name: Upload the build artifact
         uses: actions/upload-artifact@v2
         with:
-          name: alt-ergo
+          name: alt-ergo ${{matrix.os}}
           path: localinstall
