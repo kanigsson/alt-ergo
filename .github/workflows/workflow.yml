@@ -33,11 +33,11 @@ jobs:
         with:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
 
-      - name: Install ocaml
-        run: opam install alt-ergo --dest-dir=staging
+      - name: Install alt-ergo
+        run: opam install alt-ergo --destdir=staging
 
       - name: Upload package
         uses: actions/upload-artifact@v3
         with:
-          name: why3pack-${{matrix.os}}
+          name: altergo-${{matrix.os}}
           path: staging
