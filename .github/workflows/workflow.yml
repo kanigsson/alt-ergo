@@ -33,9 +33,6 @@ jobs:
         with:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
 
-      - name: Build Ocaml
-        run: opam pin alt-ergo . -y
-
       - name: Install ocaml
         run: opam install alt-ergo --dest-dir=staging
 
