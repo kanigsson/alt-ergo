@@ -33,6 +33,9 @@ jobs:
         with:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
 
+      - name: Delete GMP dll
+        run: python -c "import glob, os; [os.remove(f) for f in glob.glob('/usr/x86_64-w64-mingw32/sys-root/mingw/*/libgmp*dll*')]"
+
       - name: Install alt-ergo
         run: opam install alt-ergo --destdir=staging
 
