@@ -47,7 +47,7 @@ jobs:
           dune-cache: true
 
       - name: Install dependencies
-        run: opam exec -- make deps
+        run: opam install ./alt-ergo.opam ./alt-ergo-lib.opam ./alt-ergo-parsers.opam --deps-only
 
       - name: Build alt-ergo with opam
         run: |
